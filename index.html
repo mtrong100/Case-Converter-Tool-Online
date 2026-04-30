@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chuyển Đổi Chữ Hoa/Thường</title>
+<meta name="description" content="Công cụ chuyển đổi chữ hoa/thường miễn phí, hỗ trợ tiếng Việt đầy đủ">
+<meta name="theme-color" content="#5b7fff">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Case Converter">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-base: #0d0f14;
+    --bg-surface: #151820;
+    --bg-card: #1c2030;
+    --bg-hover: #232840;
+    --border: #2a2f45;
+    --border-active: #4a5580;
+    --text-primary: #e8ecf5;
+    --text-secondary: #8a93b2;
+    --text-muted: #545e7a;
+    --accent: #5b7fff;
+    --accent-glow: rgba(91,127,255,0.15);
+    --accent-hover: #7090ff;
+    --success: #3ecf8e;
+    --success-bg: rgba(62,207,142,0.1);
+    --warning: #f5a623;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+  }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(91,127,255,0.08) 0%, transparent 60%);
+  }
+
+  /* ── PWA Banners ── */
+  #offlineBanner {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #2a1a00;
+    border-bottom: 1px solid rgba(245,166,35,0.3);
+    color: var(--warning);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 20px;
+    text-align: center;
+  }
+  #offlineBanner.show { display: flex; }
+  #offlineBanner svg { flex-shrink: 0; }
+
+  #installBanner {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    animation: slideDown 0.3s ease;
+  }
+  #installBanner.show { display: flex; }
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .install-icon {
+    width: 36px; height: 36px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(91,127,255,0.3);
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .install-info { flex: 1; }
+  .install-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  .install-sub { font-size: 12px; color: var(--text-muted); }
+
+  .install-actions { display: flex; gap: 8px; }
+
+  .btn-install {
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: #fff;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .btn-install:hover { background: var(--accent-hover); }
+
+  .btn-dismiss {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 12px;
+    padding: 7px 12px;
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+  .btn-dismiss:hover { border-color: var(--border-active); color: var(--text-secondary); }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding: 56px 24px 40px;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    display: block;
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+    margin: 20px auto 0;
+    border-radius: 2px;
+  }
+
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(91,127,255,0.25);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px; font-weight: 600;
+    color: #7090ff;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .logo-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  h1 span {
+    background: linear-gradient(135deg, #5b7fff, #a56bff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    margin-top: 12px;
+    color: var(--text-secondary);
+    font-size: 15px;
+    max-width: 520px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  /* ── Layout ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+  }
+
+  .main-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .textarea-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .char-count {
+    font-size: 12px; color: var(--text-muted);
+    font-weight: 400; letter-spacing: 0; text-transform: none;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 160px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px; line-height: 1.7;
+    padding: 16px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  textarea::placeholder { color: var(--text-muted); }
+
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 24px 0;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+  .divider-text {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .modes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .mode-btn {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    text-align: left;
+    color: var(--text-primary);
+    font-family: 'Be Vietnam Pro', sans-serif;
+  }
+  .mode-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-active);
+    transform: translateY(-1px);
+  }
+  .mode-btn.active {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px rgba(91,127,255,0.2);
+  }
+
+  .mode-icon {
+    width: 34px; height: 34px;
+    border-radius: var(--radius-sm);
+    background: rgba(91,127,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    font-family: 'Be Vietnam Pro', sans-serif;
+  }
+  .mode-btn.active .mode-icon { background: rgba(91,127,255,0.25); }
+
+  .mode-info { flex: 1; }
+  .mode-name {
+    font-size: 13px; font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px; line-height: 1.3;
+  }
+  .mode-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+  .mode-btn.active .mode-name { color: #a0b4ff; }
+
+  .convert-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #4a6ef0, #7c4fff);
+    border: none;
+    border-radius: var(--radius-md);
+    color: #fff;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px; font-weight: 600;
+    padding: 14px 24px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+    position: relative; overflow: hidden;
+  }
+  .convert-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .convert-btn:hover::before { opacity: 1; }
+  .convert-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(74,110,240,0.35); }
+  .convert-btn:active { transform: translateY(0); }
+
+  /* ── Result ── */
+  .result-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 28px;
+    display: none;
+    animation: slideUp 0.3s ease;
+  }
+  .result-card.show { display: block; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .result-title {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .result-title::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--success);
+    border-radius: 50%;
+  }
+
+  .result-actions { display: flex; gap: 8px; }
+
+  .action-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 12px; font-weight: 500;
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .action-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-active);
+    color: var(--text-primary);
+  }
+  .action-btn.copied {
+    background: var(--success-bg);
+    border-color: rgba(62,207,142,0.3);
+    color: var(--success);
+  }
+  .action-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  .result-text {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    font-size: 15px; line-height: 1.7;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 80px;
+    user-select: all;
+  }
+
+  .stats-row { display: flex; gap: 20px; margin-top: 14px; }
+  .stat { font-size: 12px; color: var(--text-muted); }
+  .stat strong { color: var(--text-secondary); font-weight: 600; }
+
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 600px) {
+    .main-card, .result-card { padding: 20px; }
+    .modes-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 2rem; }
+    .install-actions { flex-direction: column; }
+    .result-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Offline Banner -->
+<div id="offlineBanner">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="1" y1="1" x2="23" y2="23"/>
+    <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55M5 12.55a10.94 10.94 0 0 1 5.17-2.39M10.71 5.05A16 16 0 0 1 22.56 9M1.42 9a15.91 15.91 0 0 1 4.7-2.88M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/>
+  </svg>
+  Bạn đang offline — ứng dụng vẫn hoạt động bình thường
+</div>
+
+<!-- Install Banner -->
+<div id="installBanner">
+  <div class="install-icon">📲</div>
+  <div class="install-info">
+    <div class="install-title">Cài đặt ứng dụng</div>
+    <div class="install-sub">Dùng offline, không cần mạng, nhanh hơn trình duyệt</div>
+  </div>
+  <div class="install-actions">
+    <button class="btn-install" id="btnInstall">Cài đặt</button>
+    <button class="btn-dismiss" id="btnDismiss">Bỏ qua</button>
+  </div>
+</div>
+
+<header class="header">
+  <div class="logo-badge">
+    <span class="logo-dot"></span>
+    Công cụ miễn phí · PWA
+  </div>
+  <h1>Chuyển Đổi<br><span>Chữ Hoa / Thường</span></h1>
+  <p class="subtitle">Chuyển đổi văn bản tiếng Việt và tiếng Anh sang bất kỳ kiểu chữ nào — hoạt động cả khi offline</p>
+</header>
+
+<div class="container">
+  <div class="main-card">
+    <div class="textarea-label">
+      <span>Nhập văn bản</span>
+      <span class="char-count" id="charCount">0 ký tự</span>
+    </div>
+    <textarea id="inputText" placeholder="Dán hoặc nhập văn bản của bạn vào đây..." spellcheck="false"></textarea>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-text">Chọn kiểu chữ</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="modes-grid">
+      <button class="mode-btn active" data-mode="uppercase" onclick="selectMode(this)">
+        <div class="mode-icon">AA</div>
+        <div class="mode-info">
+          <div class="mode-name">CHỮ HOA</div>
+          <div class="mode-desc">Viết hoa tất cả các ký tự</div>
+        </div>
+      </button>
+      <button class="mode-btn" data-mode="lowercase" onclick="selectMode(this)">
+        <div class="mode-icon">aa</div>
+        <div class="mode-info">
+          <div class="mode-name">chữ thường</div>
+          <div class="mode-desc">Chuyển tất cả sang chữ thường</div>
+        </div>
+      </button>
+      <button class="mode-btn" data-mode="titlecase" onclick="selectMode(this)">
+        <div class="mode-icon">Aa</div>
+        <div class="mode-info">
+          <div class="mode-name">Viết Hoa Mỗi Từ</div>
+          <div class="mode-desc">Viết hoa chữ đầu của từng từ</div>
+        </div>
+      </button>
+      <button class="mode-btn" data-mode="sentencecase" onclick="selectMode(this)">
+        <div class="mode-icon">A.</div>
+        <div class="mode-info">
+          <div class="mode-name">Viết hoa đầu câu</div>
+          <div class="mode-desc">Chỉ viết hoa đầu mỗi câu</div>
+        </div>
+      </button>
+      <button class="mode-btn" data-mode="togglecase" onclick="selectMode(this)">
+        <div class="mode-icon">aA</div>
+        <div class="mode-info">
+          <div class="mode-name">xEn KẽM cHỮ</div>
+          <div class="mode-desc">Đảo ngược hoa/thường từng ký tự</div>
+        </div>
+      </button>
+      <button class="mode-btn" data-mode="firstletter" onclick="selectMode(this)">
+        <div class="mode-icon">A_</div>
+        <div class="mode-info">
+          <div class="mode-name">Viết hoa ký tự đầu</div>
+          <div class="mode-desc">Chỉ viết hoa ký tự đầu tiên</div>
+        </div>
+      </button>
+    </div>
+
+    <button class="convert-btn" onclick="convertText()">⟳ &nbsp; Chuyển đổi ngay</button>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <div class="result-header">
+      <div class="result-title">Kết quả chuyển đổi</div>
+      <div class="result-actions">
+        <button class="action-btn" id="copyBtn" onclick="copyText()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          </svg>
+          Sao chép
+        </button>
+        <button class="action-btn" onclick="downloadText()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Tải xuống
+        </button>
+      </div>
+    </div>
+    <div class="result-text" id="resultText"></div>
+    <div class="stats-row">
+      <div class="stat">Ký tự: <strong id="statChars">0</strong></div>
+      <div class="stat">Từ: <strong id="statWords">0</strong></div>
+      <div class="stat">Dòng: <strong id="statLines">0</strong></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Công cụ miễn phí · Không lưu trữ dữ liệu · Hỗ trợ tiếng Việt · Hoạt động offline</p>
+</footer>
+
+<script>
+  // ── App Logic ──
+  let selectedMode = 'uppercase';
+
+  const inputEl = document.getElementById('inputText');
+  const resultCard = document.getElementById('resultCard');
+  const resultText = document.getElementById('resultText');
+  const charCount = document.getElementById('charCount');
+
+  // URL param mode preselect
+  const urlMode = new URLSearchParams(location.search).get('mode');
+  if (urlMode) {
+    const btn = document.querySelector(`[data-mode="${urlMode}"]`);
+    if (btn) {
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedMode = urlMode;
+    }
+  }
+
+  inputEl.addEventListener('input', () => {
+    charCount.textContent = inputEl.value.length + ' ký tự';
+  });
+
+  function selectMode(btn) {
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedMode = btn.dataset.mode;
+    if (resultCard.classList.contains('show')) convertText();
+  }
+
+  function convertText() {
+    const text = inputEl.value;
+    if (!text.trim()) { alert('Vui lòng nhập văn bản trước khi chuyển đổi.'); return; }
+    let result = '';
+    switch (selectedMode) {
+      case 'uppercase':    result = text.toUpperCase(); break;
+      case 'lowercase':    result = text.toLowerCase(); break;
+      case 'titlecase':    result = text.replace(/\S+/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()); break;
+      case 'sentencecase': result = text.toLowerCase().replace(/(^\s*\S)|([\.\!\?]\s+\S)/g, c => c.toUpperCase()); break;
+      case 'togglecase':   result = text.split('').map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join(''); break;
+      case 'firstletter':  result = text.charAt(0).toUpperCase() + text.slice(1).toLowerCase(); break;
+    }
+    resultText.textContent = result;
+    document.getElementById('statChars').textContent = result.length;
+    document.getElementById('statWords').textContent = result.trim() ? result.trim().split(/\s+/).length : 0;
+    document.getElementById('statLines').textContent = result.split('\n').length;
+    resultCard.classList.add('show');
+    resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function copyText() {
+    const text = resultText.textContent;
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.classList.add('copied');
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg> Đã sao chép`;
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Sao chép`;
+      }, 2000);
+    });
+  }
+
+  function downloadText() {
+    const text = resultText.textContent;
+    if (!text) return;
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'chuyen-doi-chu-' + selectedMode + '.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // ── PWA: Service Worker ──
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').then(reg => {
+        console.log('[SW] Registered:', reg.scope);
+      }).catch(err => console.warn('[SW] Error:', err));
+    });
+  }
+
+  // ── PWA: Online/Offline ──
+  const offlineBanner = document.getElementById('offlineBanner');
+  function updateOnlineStatus() {
+    offlineBanner.classList.toggle('show', !navigator.onLine);
+  }
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+  updateOnlineStatus();
+
+  // ── PWA: Install Prompt ──
+  let deferredPrompt = null;
+  const installBanner = document.getElementById('installBanner');
+  const btnInstall = document.getElementById('btnInstall');
+  const btnDismiss = document.getElementById('btnDismiss');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Don't show if dismissed before
+    if (!localStorage.getItem('pwa-dismissed')) {
+      installBanner.classList.add('show');
+    }
+  });
+
+  btnInstall.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    installBanner.classList.remove('show');
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log('[PWA] Install outcome:', outcome);
+    deferredPrompt = null;
+  });
+
+  btnDismiss.addEventListener('click', () => {
+    installBanner.classList.remove('show');
+    localStorage.setItem('pwa-dismissed', '1');
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installBanner.classList.remove('show');
+    deferredPrompt = null;
+    console.log('[PWA] Installed successfully');
+  });
+</script>
+</body>
+</html>

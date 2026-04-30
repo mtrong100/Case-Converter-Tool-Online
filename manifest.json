@@ -1,0 +1,41 @@
+{
+  "name": "Chuyển Đổi Chữ Hoa/Thường",
+  "short_name": "Case Converter",
+  "description": "Công cụ chuyển đổi chữ hoa/thường miễn phí, hỗ trợ tiếng Việt",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d0f14",
+  "theme_color": "#5b7fff",
+  "orientation": "portrait-primary",
+  "lang": "vi",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "CHỮ HOA",
+      "short_name": "Hoa",
+      "description": "Chuyển sang chữ hoa",
+      "url": "./index.html?mode=uppercase"
+    },
+    {
+      "name": "chữ thường",
+      "short_name": "Thường",
+      "description": "Chuyển sang chữ thường",
+      "url": "./index.html?mode=lowercase"
+    }
+  ]
+}
