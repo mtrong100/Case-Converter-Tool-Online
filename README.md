@@ -1,33 +1,51 @@
-# 🔡 Case Converter — Công cụ Chuyển Đổi Chữ Hoa/Thường
+<div align="center">
 
-> Công cụ trực tuyến miễn phí, hỗ trợ chuyển đổi văn bản tiếng Việt và tiếng Anh sang nhiều kiểu chữ khác nhau. Hoạt động offline nhờ PWA (Progressive Web App).
+<img src="./icons/banner.svg" alt="Case Converter Banner" width="100%">
 
-![PWA](https://img.shields.io/badge/PWA-Ready-5b7fff?style=flat-square&logo=pwa)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
-![HTML](https://img.shields.io/badge/HTML5-Pure-orange?style=flat-square&logo=html5)
-![Offline](https://img.shields.io/badge/Offline-Supported-success?style=flat-square)
+<br>
+<h3>Công cụ chuyển đổi chữ Hoa/Thường toàn diện với hỗ trợ Offline (PWA)</h3>
 
----
+![License](https://img.shields.io/badge/license-MIT-success?style=for-the-badge)
+![HTML5](https://img.shields.io/badge/HTML5-Pure-orange?style=for-the-badge&logo=html5)
+![PWA](https://img.shields.io/badge/PWA-Ready-blue?style=for-the-badge&logo=pwa)
+![Offline](https://img.shields.io/badge/Offline-Supported-success?style=for-the-badge)
+![Vietnamese](https://img.shields.io/badge/Language-Vietnamese-red?style=for-the-badge)
 
-## 📋 Mục lục
+<br>
 
-- [Tính năng](#-tính-năng)
-- [Demo](#-demo)
-- [Cấu trúc dự án](#-cấu-trúc-dự-án)
-- [Cài đặt & Chạy](#-cài-đặt--chạy)
-- [Deploy](#-deploy)
-- [PWA](#-pwa---progressive-web-app)
-- [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
-- [License](#-license)
+![6 Modes](https://img.shields.io/badge/6_CHẾ_ĐỘ-8A2BE2?style=for-the-badge)
+![Realtime Stats](https://img.shields.io/badge/REALTIME_STATS-00FA9A?style=for-the-badge)
+![Vanilla JS](https://img.shields.io/badge/VANILLA_JS-FF1493?style=for-the-badge)
+![Desktop & Mobile](https://img.shields.io/badge/DESKTOP_|_MOBILE-FFA500?style=for-the-badge)
 
----
+<br>
 
-## ✨ Tính năng
+[![TRẢI NGHIỆM NGAY](https://img.shields.io/badge/🚀_TRẢI_NGHIỆM_NGAY-00E5FF?style=for-the-badge)](#-demo--chạy-local)
+[![CÀI ĐẶT PWA](https://img.shields.io/badge/📲_CÀI_ĐẶT_PWA-9932CC?style=for-the-badge)](#-pwa---trải-nghiệm-như-app-thật)
+[![MÃ NGUỒN](https://img.shields.io/badge/💻_MÃ_NGUỒN-FF007F?style=for-the-badge)](#-cấu-trúc-dự-án)
 
-### 6 chế độ chuyển đổi
+</div>
 
-| Chế độ | Ví dụ đầu vào | Kết quả |
-|--------|--------------|---------|
+<hr>
+
+## 🌟 Tính Năng Nổi Bật
+
+| Icon | Tính năng | Mô tả chi tiết |
+|:---:|:---|:---|
+| 🔠 | **6 Chế độ chuyển đổi** | Hỗ trợ từ `CHỮ HOA`, `chữ thường` đến `Viết Hoa Mỗi Từ`, `xEn KẽM cHỮ`,... |
+| 📊 | **Thống kê Realtime** | Tự động đếm số **ký tự**, **số từ**, **số dòng** ngay khi bạn gõ văn bản. |
+| 📋 | **Sao chép 1-Click** | Copy toàn bộ kết quả vào clipboard chỉ với một thao tác click chuột. |
+| 💾 | **Tải xuống nội dung** | Tự động sinh file `.txt` chứa kết quả để lưu trực tiếp về thiết bị. |
+| 📴 | **Chế độ Offline (PWA)** | Hoạt động trơn tru ngay cả khi **mất kết nối internet**, hiển thị banner offline. |
+| 📲 | **Cài đặt như App Native** | Có thể cài đặt trực tiếp vào màn hình chính điện thoại, máy tính (Add to Home Screen). |
+| 🔗 | **URL Parameters** | Hỗ trợ chọn sẵn chế độ qua URL (VD: thêm `?mode=uppercase` vào đường dẫn). |
+
+<br>
+
+## 🔄 6 Chế Độ Chuyển Đổi
+
+| Chế độ | Ví dụ đầu vào | Kết quả đầu ra |
+|:---|:---|:---|
 | **CHỮ HOA** | `xin chào việt nam` | `XIN CHÀO VIỆT NAM` |
 | **chữ thường** | `XIN CHÀO VIỆT NAM` | `xin chào việt nam` |
 | **Viết Hoa Mỗi Từ** | `xin chào việt nam` | `Xin Chào Việt Nam` |
@@ -35,203 +53,83 @@
 | **xEn KẽM cHỮ** | `Xin Chào` | `xIN cHÀO` |
 | **Viết hoa ký tự đầu** | `xin chào việt nam` | `Xin chào việt nam` |
 
-### Tiện ích khác
+<hr>
 
-- 📊 **Thống kê realtime** — đếm ký tự, từ, dòng
-- 📋 **Sao chép** vào clipboard chỉ 1 click
-- 💾 **Tải xuống** kết quả dạng `.txt`
-- 📴 **Banner offline** — thông báo khi mất kết nối
-- 📲 **Prompt cài đặt** — gợi ý cài app khi có thể
-- 🔗 **URL param** — preselect chế độ qua `?mode=uppercase`
+## 🚀 Demo & Chạy Local
 
----
+Bạn có thể mở file `index.html` trực tiếp trên trình duyệt hoặc deploy lên hosting HTTPS để sử dụng đầy đủ các tính năng PWA!
 
-## 🚀 Demo
+> ⚠️ **Lưu ý Quan Trọng:** Service Worker và tính năng cài đặt PWA **bắt buộc yêu cầu HTTPS** hoặc `localhost`. Nếu bạn chỉ mở file dạng `file://`, ứng dụng vẫn hoạt động nhưng không thể lưu cache để chạy offline.
 
-Mở file `index.html` trực tiếp trên trình duyệt, hoặc deploy lên hosting HTTPS để dùng đầy đủ tính năng PWA.
+### Chạy Local Server với PWA
 
-> ⚠️ **Lưu ý:** Service Worker và tính năng cài đặt PWA **yêu cầu HTTPS**. Mở file local (`file://`) sẽ không kích hoạt được Service Worker.
-
----
-
-## 📁 Cấu trúc dự án
-
-```
-case-converter-pwa/
-├── index.html          # Trang chính — toàn bộ UI và logic
-├── manifest.json       # Web App Manifest — cấu hình PWA
-├── sw.js               # Service Worker — cache & offline
-├── icons/
-│   ├── icon-192.png    # Icon PWA (192×192)
-│   └── icon-512.png    # Icon PWA (512×512)
-└── README.md           # Tài liệu dự án
-```
-
----
-
-## ⚙️ Cài đặt & Chạy
-
-### Chạy local (không có PWA)
-
-Chỉ cần mở file trực tiếp:
+Để trải nghiệm toàn bộ tính năng:
 
 ```bash
-# Clone hoặc giải nén project
+# Clone source code
 cd case-converter-pwa
 
-# Mở trực tiếp trên trình duyệt
-open index.html
-# hoặc double-click vào index.html
-```
-
-> Tính năng cơ bản (chuyển đổi, copy, download) hoạt động bình thường. Service Worker **không** chạy trên `file://`.
-
-### Chạy local với PWA đầy đủ
-
-Cần một HTTP server local hỗ trợ HTTPS hoặc `localhost`:
-
-```bash
-# Dùng Python (có sẵn trên macOS/Linux)
-cd case-converter-pwa
+# Dùng Python (Có sẵn trên hầu hết các máy)
 python3 -m http.server 8080
-# Truy cập: http://localhost:8080
+# => Truy cập: http://localhost:8080
 
-# Hoặc dùng Node.js (cần cài npx)
+# Hoặc dùng Node.js (Yêu cầu cài đặt npm)
 npx serve .
-# Truy cập theo địa chỉ hiện ra
 
-# Hoặc dùng VS Code extension "Live Server"
-# Click chuột phải vào index.html → Open with Live Server
+# Hoặc dùng extension "Live Server" trên VS Code
 ```
 
----
+<hr>
 
-## 🌐 Deploy
+## 📁 Cấu Trúc Dự Án
 
-Project là **static site** thuần — không cần server, không cần build. Chỉ cần upload lên hosting hỗ trợ HTTPS.
+Dự án được xây dựng hoàn toàn bằng **HTML/CSS/JS thuần**, không cần build, siêu nhẹ và tối ưu!
 
-### GitHub Pages
-
-```bash
-# 1. Tạo repository mới trên GitHub
-# 2. Push code lên
-git init
-git add .
-git commit -m "Initial commit"
-git remote add origin https://github.com/<username>/<repo>.git
-git push -u origin main
-
-# 3. Vào Settings → Pages → Source: Deploy from branch → main
-# 4. Truy cập: https://<username>.github.io/<repo>
+```text
+case-converter-pwa/
+├── index.html          # Giao diện chính và logic ứng dụng
+├── manifest.json       # Cấu hình Web App Manifest (cho PWA)
+├── sw.js               # Service Worker xử lý cache & offline
+├── icons/
+│   ├── banner.svg      # Banner hiển thị cho README
+│   ├── icon-192.png    # Icon cài đặt (192x192)
+│   └── icon-512.png    # Icon cài đặt (512x512)
+└── README.md           # Tài liệu hướng dẫn
 ```
 
-### Netlify
+<hr>
 
-```bash
-# Kéo thả thư mục case-converter-pwa/ vào https://app.netlify.com/drop
-# Netlify tự cấp domain HTTPS miễn phí
-```
+## 📲 PWA — Trải Nghiệm Như App Thật
 
-### Vercel
+Ứng dụng hỗ trợ cài đặt thẳng vào thiết bị của bạn với trải nghiệm như một App Native.
 
-```bash
-npm i -g vercel
-cd case-converter-pwa
-vercel
-# Làm theo hướng dẫn, Vercel tự deploy và cấp HTTPS
-```
+### Các nền tảng được hỗ trợ:
 
----
+| Nền tảng | Hướng dẫn cài đặt |
+|:---|:---|
+| **Android (Chrome)** | Sẽ có thông báo tự động hiện ra, hoặc nhấn menu ⋮ chọn **Thêm vào màn hình chính** |
+| **iOS (Safari)** | Nhấn nút **Chia sẻ** (Share) dưới đáy màn hình → chọn **Thêm vào MH chính** |
+| **Windows/Mac** | Nhấn biểu tượng ⊕ góc phải thanh địa chỉ, hoặc chọn menu → **Cài đặt ứng dụng** |
 
-## 📲 PWA — Progressive Web App
+<hr>
 
-Project hỗ trợ cài đặt như ứng dụng native trên cả desktop và mobile.
+## 🛠 Nền Tảng Công Nghệ
 
-### Cách hoạt động
+Sản phẩm được tạo nên bởi các công nghệ web cơ bản nhất nhưng mạnh mẽ nhất:
 
-```
-Trình duyệt
-    │
-    ├── Tải index.html
-    ├── Đăng ký sw.js (Service Worker)
-    │       │
-    │       ├── [Install] Cache toàn bộ assets vào CacheStorage
-    │       ├── [Activate] Xóa cache cũ
-    │       └── [Fetch]  Cache-first strategy
-    │                     ├── Có cache → trả về ngay (offline OK)
-    │                     └── Không cache → fetch từ mạng + lưu cache
-    │
-    └── Đọc manifest.json
-            ├── Tên app, icon, màu theme
-            ├── display: standalone (giống app native)
-            └── shortcuts (shortcut nhanh trên Android)
-```
+- **Giao diện & Cấu trúc:** `HTML5` & `CSS3` (Tích hợp responsive & animation mượt mà)
+- **Logic cốt lõi:** `Vanilla JavaScript` (Tối ưu tốc độ, không độ trễ)
+- **Công nghệ Offline:** `Service Worker API`, `Cache API`, `Web App Manifest`
+- **Tiện ích hệ thống:** `Clipboard API` (Copy nhanh)
+- **Typography:** `Google Fonts` (Be Vietnam Pro, Playfair Display)
 
-### Chiến lược cache (Cache-First)
-
-```
-Request đến
-    │
-    ├── Có trong Cache? ──Yes──→ Trả về từ Cache (nhanh, offline OK)
-    │
-    └── Không có ──────────────→ Fetch từ Network
-                                      │
-                                      ├── Thành công → Lưu vào Cache + Trả về
-                                      └── Thất bại   → Fallback index.html
-```
-
-### Cài đặt trên thiết bị
-
-| Nền tảng | Cách cài |
-|----------|---------|
-| **Android (Chrome)** | Banner tự hiện, hoặc menu ⋮ → *Thêm vào màn hình chính* |
-| **iOS (Safari)** | Nút chia sẻ → *Thêm vào màn hình chính* |
-| **Windows/Mac (Chrome/Edge)** | Icon ⊕ trên thanh địa chỉ, hoặc menu → *Cài đặt ứng dụng* |
-
-### Cập nhật cache
-
-Khi muốn buộc người dùng tải lại assets mới, thay đổi tên cache trong `sw.js`:
-
-```js
-// sw.js
-const CACHE_NAME = 'case-converter-v2'; // tăng version lên
-```
-
----
-
-## 🛠 Công nghệ sử dụng
-
-| Công nghệ | Mục đích |
-|-----------|---------|
-| **HTML5** | Cấu trúc trang |
-| **CSS3** | Giao diện, animation, responsive |
-| **Vanilla JavaScript** | Logic chuyển đổi, PWA |
-| **Service Worker API** | Cache, offline support |
-| **Web App Manifest** | Cấu hình PWA, installable |
-| **Cache API** | Lưu trữ assets offline |
-| **Clipboard API** | Sao chép kết quả |
-| **Google Fonts** | Be Vietnam Pro, Playfair Display |
-
-> Không dùng framework, không có build step, không có dependency — chỉ là HTML/CSS/JS thuần.
-
----
-
-## 🌍 Hỗ trợ trình duyệt
-
-| Trình duyệt | Hỗ trợ |
-|-------------|--------|
-| Chrome 67+ | ✅ Đầy đủ (PWA + Install) |
-| Edge 79+ | ✅ Đầy đủ (PWA + Install) |
-| Firefox 65+ | ✅ PWA (không có install prompt) |
-| Safari 16.4+ | ✅ PWA + Add to Home Screen |
-| Samsung Internet | ✅ Đầy đủ |
-
----
+<hr>
 
 ## 📄 License
 
-MIT License — tự do sử dụng, chỉnh sửa và phân phối.
+Dự án này được phân phối dưới giấy phép **MIT License**. Bạn hoàn toàn tự do sử dụng, chỉnh sửa và phân phối lại.
 
----
-
-<p align="center">Làm với ❤️ · Hỗ trợ tiếng Việt đầy đủ · Hoàn toàn miễn phí</p>
+<br>
+<p align="center">
+  <b>Làm với ❤️ · Hỗ trợ tiếng Việt đầy đủ · Hoàn toàn miễn phí</b>
+</p>
